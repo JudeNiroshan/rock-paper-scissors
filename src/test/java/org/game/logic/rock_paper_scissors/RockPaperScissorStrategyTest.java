@@ -5,10 +5,10 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.game.controls.Choice;
 import org.game.logic.GameStrategy;
-import org.game.player.NPCPlayer;
 import org.game.player.Player;
 import org.game.player.PlayerFactory;
 import org.game.player.PlayerType;
+import org.game.player.impl.NPCPlayer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

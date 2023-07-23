@@ -1,6 +1,8 @@
-package org.game.player;
+package org.game.player.impl;
 
 import org.game.controls.Choice;
+import org.game.player.PlayerType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +14,7 @@ class ComputerPlayerTest {
 
     @Test
     void getPlayerType() {
-        assertEquals(PlayerType.COMPUTER, classUnderTest.getPlayerType());
+        Assertions.assertEquals(PlayerType.COMPUTER, classUnderTest.getPlayerType());
     }
 
     @Test

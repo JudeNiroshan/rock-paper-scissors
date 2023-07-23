@@ -23,8 +23,6 @@ public class GameBuilder {
     }
 
     public Game build() {
-        List<Player> qualifiedPlayers = List.copyOf(players);
-        players.clear();
-        return new Game(gameStrategy, qualifiedPlayers);
+        return new Game(gameStrategy, players);
     }
 }

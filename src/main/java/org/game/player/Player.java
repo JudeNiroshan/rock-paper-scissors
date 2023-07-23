@@ -10,4 +10,6 @@ public interface Player {
     PlayerType getPlayerType();
     void engage() throws Exception;
     Choice getChoice() throws Exception;
+
+    void reset();
 }

@@ -1,6 +1,8 @@
-package org.game.player;
+package org.game.player.impl;
 
 import org.game.controls.Choice;
+import org.game.player.Player;
+import org.game.player.PlayerType;
 
 public class NPCPlayer implements Player {
 
@@ -19,6 +21,11 @@ public class NPCPlayer implements Player {
     @Override
     public Choice getChoice() {
         return choice;
+    }
+
+    @Override
+    public void reset() {
+        choice = null;
     }
 
     public void setChoice(Choice choice) {

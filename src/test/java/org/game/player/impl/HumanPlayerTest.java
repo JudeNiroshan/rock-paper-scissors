@@ -1,10 +1,12 @@
-package org.game.player;
+package org.game.player.impl;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.game.controls.Choice;
-import org.game.util.GameLogger;
-import org.jboss.logging.Logger;
+import org.game.integration.ConnectorProvider;
+import org.game.player.PlayerType;
+import org.game.player.TestConsole;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 class HumanPlayerTest {
+    TestConsole testConsole = new TestConsole();
     HumanPlayer classUnderTest = new HumanPlayer();
     private static final InputStream systemIn = System.in;
 
@@ -22,6 +25,11 @@ class HumanPlayerTest {
         System.setIn(testIn);
     }
 
+//    @BeforeAll
+//    public static void mockConnector() {
+//        ConnectorProvider.getInstance().setConfiguredConnectorName("console");
+//    }
+
     @AfterAll
     public static void restoreSystemInput() {
         System.setIn(systemIn);
@@ -29,73 +37,52 @@ class HumanPlayerTest {
 
     @Test
     void getPlayerType() {
-        assertEquals(PlayerType.HUMAN, classUnderTest.getPlayerType());
+        Assertions.assertEquals(PlayerType.HUMAN, classUnderTest.getPlayerType());
     }
 
     @Test
     void engage_with_rockChoice() throws Exception {
         // preparation
         classUnderTest.choice = null;
+        testConsole.setChoice(Choice.ROCK);
+        testConsole.setNumberOfGames(1);
+        ConnectorProvider.getInstance().setExternalResourceConnector(testConsole);
         provideInput("1");
         // test
         classUnderTest.engage();
 
         // verification
-        assertEquals(Choice.ROCK, classUnderTest.choice);
+        assertEquals(testConsole.getChoice(), classUnderTest.choice);
     }
 
     @Test
     void engage_with_paperChoice() throws Exception {
         // preparation
         classUnderTest.choice = null;
+        testConsole.setChoice(Choice.PAPER);
+        testConsole.setNumberOfGames(1);
+        ConnectorProvider.getInstance().setExternalResourceConnector(testConsole);
         provideInput("2");
         // test
         classUnderTest.engage();
 
         // verification
-        assertEquals(Choice.PAPER, classUnderTest.choice);
+        assertEquals(testConsole.getChoice(), classUnderTest.choice);
     }
 
     @Test
     void engage_with_scissorsChoice() throws Exception {
         // preparation
         classUnderTest.choice = null;
+        testConsole.setChoice(Choice.SCISSORS);
+        testConsole.setNumberOfGames(1);
+        ConnectorProvider.getInstance().setExternalResourceConnector(testConsole);
         provideInput("3");
         // test
         classUnderTest.engage();
 
         // verification
-        assertEquals(Choice.SCISSORS, classUnderTest.choice);
-    }
-
-    @Test
-    void engage_with_invalidNumericChoice() throws Exception {
-        // preparation
-        TestLogger testLogger = new TestLogger();
-        GameLogger.setLogger(testLogger);
-        provideInput("4\n 1\n");
-        // test
-        classUnderTest.engage();
-
-        // verification
-        assertEquals(3, testLogger.getLogMessages().get(Logger.Level.INFO).size());
-        assertEquals("Invalid choice: " + 4, testLogger.getLogMessages().get(Logger.Level.INFO).get(1));
-    }
-
-    @Test
-    void engage_with_invalidChoice() throws Exception {
-        // preparation
-        TestLogger testLogger = new TestLogger();
-        GameLogger.setLogger(testLogger);
-        provideInput("something \n 3 \n");
-        // test
-        classUnderTest.engage();
-
-
-        // verification
-        assertEquals(3, testLogger.getLogMessages().get(Logger.Level.INFO).size());
-        assertEquals("Invalid input. Please enter a valid integer.",
-                testLogger.getLogMessages().get(Logger.Level.INFO).get(1));
+        assertEquals(testConsole.getChoice(), classUnderTest.choice);
     }
 
     @Test

@@ -39,7 +39,7 @@ public class TestLogger extends Logger {
         if(strings == null) {
             strings = new ArrayList<>();
         }
-        strings.add(String.valueOf(format));
+        strings.add(String.valueOf(String.format(format, parameters)));
         logMessages.put(level, strings);
     }
 

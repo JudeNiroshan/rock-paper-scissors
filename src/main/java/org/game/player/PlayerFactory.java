@@ -1,6 +1,9 @@
 package org.game.player;
 
 import jakarta.annotation.Nonnull;
+import org.game.player.impl.ComputerPlayer;
+import org.game.player.impl.HumanPlayer;
+import org.game.player.impl.NPCPlayer;
 
 public class PlayerFactory {
     public static Player createPlayer(@Nonnull PlayerType playerType) {

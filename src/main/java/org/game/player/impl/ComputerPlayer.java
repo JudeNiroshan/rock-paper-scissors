@@ -1,6 +1,8 @@
-package org.game.player;
+package org.game.player.impl;
 
 import org.game.controls.Choice;
+import org.game.player.Player;
+import org.game.player.PlayerType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -25,5 +27,10 @@ public class ComputerPlayer implements Player {
             engage();
         }
         return choice;
+    }
+
+    @Override
+    public void reset() {
+        choice = null;
     }
 }

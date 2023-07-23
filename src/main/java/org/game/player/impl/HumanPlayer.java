@@ -1,8 +1,10 @@
-package org.game.player;
+package org.game.player.impl;
 
 import org.game.controls.Choice;
-import org.game.integration.ConsoleConnector;
+import org.game.integration.ConnectorProvider;
 import org.game.integration.ExternalResourceConnector;
+import org.game.player.Player;
+import org.game.player.PlayerType;
 
 public class HumanPlayer implements Player {
     Choice choice;
@@ -14,9 +16,8 @@ public class HumanPlayer implements Player {
 
     @Override
     public void engage() throws Exception {
-        try (ExternalResourceConnector resource = new ConsoleConnector()) {
-            choice = resource.getChoice();
-        }
+        ExternalResourceConnector resource = ConnectorProvider.getInstance().getConnector();
+        choice = resource.getChoice();
     }
 
     @Override
@@ -25,5 +26,10 @@ public class HumanPlayer implements Player {
             engage();
         }
         return choice;
+    }
+
+    @Override
+    public void reset() {
+        choice = null;
     }
 }
